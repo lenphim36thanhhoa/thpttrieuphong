@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THPT Triệu Phong K25-28</title>
 
+<link rel="icon" href="https://i.ibb.co/j793BVJ/6842443-E-0-B01-43-D0-B7-CB-76-AEA90-C6317.png">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -260,30 +261,29 @@ z-index:3
 </div>
 
 </div>
+
 <script>
 
-const music = document.getElementById("music")
-const namespace = "trieuphong"
+const music=document.getElementById("music")
+const namespace="trieuphong"
 
 function startSite(){
 
-document.getElementById("popup").style.display = "none"
+document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-fetch(`https://api.counterapi.dev/v2/${namespace}/view123/up`)
+fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/view123/up`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("viewCount").innerText = d.data.up_count
+document.getElementById("viewCount").innerText=d.data.up_count
 })
-.catch(()=>{})
 
-fetch(`https://api.counterapi.dev/v2/${namespace}/like123`)
+fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText = d.data.up_count || 0
+document.getElementById("likeCount").innerText=d.data.up_count||0
 })
-.catch(()=>{})
 
 }
 
@@ -299,12 +299,11 @@ function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://api.counterapi.dev/v2/${namespace}/like123/up`)
+fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/like123/up`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText = d.data.up_count
+document.getElementById("likeCount").innerText=d.data.up_count
 })
-.catch(()=>{})
 
 localStorage.setItem("liked","true")
 
