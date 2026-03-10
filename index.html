@@ -271,13 +271,13 @@ function startSite(){
 document.getElementById("popup").style.display="none"
 music.play()
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/view`)
+fetch(`https://api.countapi.dev/hit/${namespace}/view`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("viewCount").innerText=d.value
 })
 
-fetch(`https://api.countapi.xyz/get/${namespace}/like`)
+fetch(`https://api.countapid.dev/get/${namespace}/like`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText=d.value || 0
@@ -357,6 +357,5 @@ requestAnimationFrame(draw)
 draw()
 
 </script>
-
 </body>
 </html>
