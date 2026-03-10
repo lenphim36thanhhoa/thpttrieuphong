@@ -30,12 +30,14 @@ canvas{
 position:fixed;
 top:0;
 left:0;
+width:100%;
+height:100%;
 z-index:0
 }
 
 .container{
 position:relative;
-z-index:1;
+z-index:2;
 text-align:center;
 padding:40px;
 width:340px;
@@ -88,8 +90,6 @@ font-size:12px;
 opacity:.7
 }
 
-/* VIEW + TIM */
-
 .stats{
 margin-top:12px;
 display:flex;
@@ -109,44 +109,11 @@ transition:.2s
 transform:scale(1.2)
 }
 
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:10
-}
-
-.popup-box{
-background:#111;
-padding:35px;
-border-radius:15px;
-text-align:center;
-border:1px solid #ff003c;
-box-shadow:0 0 25px #ff003c
-}
-
-.popup button{
-margin-top:20px;
-padding:10px 25px;
-border:none;
-border-radius:10px;
-background:#ff003c;
-color:white;
-cursor:pointer;
-font-size:16px
-}
-
 .video-section{
 width:90%;
 max-width:1000px;
 margin-top:40px;
-z-index:1
+z-index:2
 }
 
 .video-section h2{
@@ -170,32 +137,20 @@ border:1px solid rgba(255,0,0,0.4);
 box-shadow:0 0 15px rgba(255,0,0,0.2)
 }
 
-.video-card video{
+video{
 width:100%;
 border-radius:8px
 }
 
 .video-date{
 position:absolute;
-top:15px;
-left:15px;
+top:10px;
+left:10px;
 background:rgba(0,0,0,0.6);
 padding:5px 10px;
 border-radius:6px;
 font-size:13px;
-border:1px solid #ff003c;
-box-shadow:0 0 10px #ff003c
-}
-
-.cursor{
-position:fixed;
-width:10px;
-height:10px;
-background:#ff003c;
-border-radius:50%;
-pointer-events:none;
-box-shadow:0 0 15px #ff003c;
-z-index:9
+border:1px solid #ff003c
 }
 
 .music-btn{
@@ -208,7 +163,7 @@ padding:10px 15px;
 border-radius:10px;
 color:white;
 cursor:pointer;
-z-index:2
+z-index:3
 }
 
 </style>
@@ -216,22 +171,13 @@ z-index:2
 
 <body>
 
-<div class="popup" id="popup">
-<div class="popup-box">
-<h2>Cảm ơn vì đã xem trang của tụi em ❤️</h2>
-<button onclick="startSite()">OK</button>
-</div>
-</div>
-
-<div class="cursor" id="cursor"></div>
+<canvas id="bg"></canvas>
 
 <audio id="music" loop>
 <source src="https://raw.githubusercontent.com/lenphim36thanhhoa/cbnrthfgnf/main/c%C3%B3%20h%E1%BA%B9n%20v%E1%BB%9Bi%20thanh%20xu%C3%A2n.mp3" type="audio/mpeg">
 </audio>
 
 <button class="music-btn" onclick="toggleMusic()">🔊 Nhạc</button>
-
-<canvas id="bg"></canvas>
 
 <div class="container">
 
@@ -245,7 +191,6 @@ z-index:2
 
 <div class="footer">bio của lớp bọn em ạ</div>
 
-<!-- VIEW + TIM -->
 <div class="stats">
 <span>👁 <span id="viewCount">0</span></span>
 <span class="likeBtn" onclick="likeSite()">❤️ <span id="likeCount">0</span></span>
@@ -253,16 +198,33 @@ z-index:2
 
 </div>
 
+<div class="video-section">
+
+<h2>Kỷ Niệm Lớp</h2>
+
+<div class="video-grid">
+
+<div class="video-card">
+<div class="video-date">8/3/2026</div>
+<video controls>
+<source src="https://raw.githubusercontent.com/lenphim36thanhhoa/cbnrthfgnf/main/c%E1%BA%A3m-%C6%A1n-c%C3%A1c-b%E1%BA%A1n-zai-%C4%91%E1%BA%B9p-10a5-nh%C3%ACuuu-nh%C3%A1-a5-xuhuong.mp4">
+</video>
+</div>
+
+<div class="video-card">
+<div class="video-date">19/11/2025</div>
+<video controls>
+<source src="https://raw.githubusercontent.com/lenphim36thanhhoa/cbnrthfgnf/main/%F0%9F%8E%89%F0%9F%8E%8919-11-20-11-%E2%80%93-hai-ng_-y-th_-t-%C4%91%E1%BA%B7c-bi%E1%BB%87t-v%E1%BB%9Bi-10a5.g_-i-l%E1%BB%9Di-ch%C3%BAc-t%E1%BB%91t-%C4%91%E1%BA%B9p-nh%E1%BA%A5t-%C4%91%E1%BA%BFn-c%C3%A1c-b%E1%BA%A1n-nam-c%E1%BB%A7a-l%E1%BB%9Bp-lu%C3%B4n-m%E1%BA%A1nh-m%E1%BA%BD-t%E1%BB%B1-tin-h%E1%BB%8Dc-t%E1%BB%91t-v_-gi%E1%BB%AF-m%C3%A3i-s%E1%BB%B1-nhi.10a5-lu%C3%B4n-t%E1%BB%B1-h_-o-v%C3%AC-c%C3%B3-c%C3%B4-v_-c%C3%B3-nhau-a5-xuhuong.mp4">
+</video>
+</div>
+
+</div>
+
+</div>
+
 <script>
 
-/* MUSIC */
-
 const music=document.getElementById("music")
-
-function startSite(){
-document.getElementById("popup").style.display="none"
-music.play().catch(()=>{})
-}
 
 function toggleMusic(){
 if(music.paused){
@@ -272,38 +234,72 @@ music.pause()
 }
 }
 
-/* CURSOR */
+const canvas=document.getElementById("bg")
+const ctx=canvas.getContext("2d")
 
-const cursor=document.getElementById("cursor")
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
 
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px"
-cursor.style.top=e.clientY+"px"
+resize()
+window.addEventListener("resize",resize)
+
+let particles=[]
+
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2+1,
+d:Math.random()*2
+})
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="rgba(255,0,60,0.8)"
+
+particles.forEach(p=>{
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fill()
+
+p.y+=1
+p.x+=Math.sin(p.d)
+
+if(p.y>canvas.height){
+p.y=0
+p.x=Math.random()*canvas.width
+}
+
 })
 
-/* VIEW + TIM */
+requestAnimationFrame(draw)
 
-const namespace="thpt-trieuphong-a5"
+}
 
-/* VIEW */
+draw()
+
+const namespace="10a5-trieuphong-k25"
+
 fetch(`https://api.countapi.xyz/hit/${namespace}/view`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("viewCount").innerText=d.value
 })
 
-/* HIỆN TIM */
 fetch(`https://api.countapi.xyz/get/${namespace}/like`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText=d.value||0
 })
 
-/* BẤM TIM */
 function likeSite(){
 
 if(localStorage.getItem("liked")){
-alert("Bạn đã thả tim rồi ❤️")
 return
 }
 
