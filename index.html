@@ -285,16 +285,16 @@ draw()
 
 const namespace="10a5-trieuphong-k25"
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/view`)
+fetch(`https://api.counterapi.dev/v1/${namespace}/view123/up`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("viewCount").innerText=d.value
 })
 
-fetch(`https://api.countapi.xyz/get/${namespace}/like`)
+fetch(`https://api.counterapi.dev/v1/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.value||0
+document.getElementById("likeCount").innerText=d.value
 })
 
 function likeSite(){
@@ -303,7 +303,7 @@ if(localStorage.getItem("liked")){
 return
 }
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/like`)
+fetch(`https://api.counterapi.dev/v1/${namespace}/like123/up`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText=d.value
@@ -315,5 +315,5 @@ localStorage.setItem("liked","true")
 
 </script>
 
-</body>
+</body> 
 </html>
