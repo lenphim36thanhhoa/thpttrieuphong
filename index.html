@@ -264,7 +264,7 @@ z-index:3
 <script>
 
 const music = document.getElementById("music")
-const namespace = "10a5-trieuphong-k25"
+const namespace = "trieuphong"
 
 function startSite(){
 
@@ -272,14 +272,14 @@ document.getElementById("popup").style.display = "none"
 
 music.play().catch(()=>{})
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/view`)
+fetch(`https://api.counterapi.dev/v2/${namespace}/view123`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("viewCount").innerText = d.value
 })
 .catch(()=>{})
 
-fetch(`https://api.countapi.xyz/get/${namespace}/like`)
+fetch(`https://api.counterapi.dev/v2/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText = d.value || 0
@@ -300,7 +300,7 @@ function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/like`)
+fetch(`https://api.counterapi.dev/v2/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText = d.value
