@@ -263,25 +263,28 @@ z-index:3
 
 <script>
 
-const music=document.getElementById("music")
-const namespace="10a5-trieuphong-k25"
+const music = document.getElementById("music")
+const namespace = "10a5-trieuphong-k25"
 
 function startSite(){
 
-document.getElementById("popup").style.display="none"
-music.play()
+document.getElementById("popup").style.display = "none"
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/view123`)
+music.play().catch(()=>{})
+
+fetch(`https://api.countapi.xyz/hit/${namespace}/view`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("viewCount").innerText=d.value
+document.getElementById("viewCount").innerText = d.value
 })
+.catch(()=>{})
 
-fetch(`https://api.countapi.xyz/get/${namespace}/like123`)
+fetch(`https://api.countapi.xyz/get/${namespace}/like`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.value || 0
+document.getElementById("likeCount").innerText = d.value || 0
 })
+.catch(()=>{})
 
 }
 
@@ -297,11 +300,12 @@ function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/like123`)
+fetch(`https://api.countapi.xyz/hit/${namespace}/like`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.value
+document.getElementById("likeCount").innerText = d.value
 })
+.catch(()=>{})
 
 localStorage.setItem("liked","true")
 
