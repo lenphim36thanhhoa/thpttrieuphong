@@ -271,7 +271,7 @@ function startSite(){
 document.getElementById("popup").style.display="none"
 music.play()
 
-fetch(`https://api.counterapi.dev/v1/${namespace}/view123/up`)
+fetch(`https://api.counterapi.dev/v1/${namespace}/view123?update=1`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("viewCount").innerText=d.data.up_count
@@ -295,11 +295,9 @@ music.pause()
 
 function likeSite(){
 
-if(localStorage.getItem("liked")){
-return
-}
+if(localStorage.getItem("liked")) return
 
-fetch(`https://api.counterapi.dev/v1/${namespace}/like123/up`)
+fetch(`https://api.counterapi.dev/v1/${namespace}/like123?update=1`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText=d.data.up_count
