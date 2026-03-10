@@ -297,7 +297,7 @@ function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://api.countapi.xyz/hit/${namespace}/like`)
+fetch(`https://api.countapi.xyz/hit/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
 document.getElementById("likeCount").innerText=d.value
