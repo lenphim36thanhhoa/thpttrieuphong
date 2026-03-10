@@ -269,19 +269,18 @@ const namespace="10a5-trieuphong-k25"
 function startSite(){
 
 document.getElementById("popup").style.display="none"
-
 music.play()
 
 fetch(`https://api.counterapi.dev/v1/${namespace}/view123/up`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("viewCount").innerText=d.value
+document.getElementById("viewCount").innerText=d.data.up_count
 })
 
 fetch(`https://api.counterapi.dev/v1/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.value
+document.getElementById("likeCount").innerText=d.data.up_count
 })
 
 }
@@ -303,7 +302,7 @@ return
 fetch(`https://api.counterapi.dev/v1/${namespace}/like123/up`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.value
+document.getElementById("likeCount").innerText=d.data.up_count
 })
 
 localStorage.setItem("liked","true")
