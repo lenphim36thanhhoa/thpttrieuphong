@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THPT Triệu Phong K25-28</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif
+}
+
+body{
+background:#000;
+color:white;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+overflow-x:hidden
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0
+}
+
+.container{
+position:relative;
+z-index:1;
+text-align:center;
+padding:40px;
+width:340px;
+border-radius:20px;
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(12px);
+box-shadow:0 0 40px rgba(255,0,0,0.3);
+margin-top:80px
+}
+
+.avatar{
+width:110px;
+height:110px;
+border-radius:50%;
+margin:auto;
+margin-bottom:15px;
+background:url("https://i.ibb.co/j793BVJ/6842443-E-0-B01-43-D0-B7-CB-76-AEA90-C6317.png") center/cover;
+border:2px solid #ff003c;
+box-shadow:0 0 25px #ff003c
+}
+
+h1{
+font-size:28px;
+margin-bottom:20px;
+letter-spacing:2px;
+text-shadow:0 0 10px #ff003c,0 0 20px #ff003c
+}
+
+.links a{
+display:block;
+text-decoration:none;
+color:white;
+padding:12px;
+margin:10px 0;
+border-radius:12px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,0,0,0.4);
+transition:.3s
+}
+
+.links a:hover{
+background:#ff003c;
+transform:scale(1.07);
+box-shadow:0 0 20px #ff003c
+}
+
+.footer{
+margin-top:15px;
+font-size:12px;
+opacity:.7
+}
+
+/* VIEW + TIM */
+
+.stats{
+margin-top:12px;
+display:flex;
+justify-content:center;
+gap:20px;
+font-size:16px;
+color:#ff003c;
+text-shadow:0 0 10px #ff003c
+}
+
+.likeBtn{
+cursor:pointer;
+transition:.2s
+}
+
+.likeBtn:hover{
+transform:scale(1.2)
+}
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:10
+}
+
+.popup-box{
+background:#111;
+padding:35px;
+border-radius:15px;
+text-align:center;
+border:1px solid #ff003c;
+box-shadow:0 0 25px #ff003c
+}
+
+.popup button{
+margin-top:20px;
+padding:10px 25px;
+border:none;
+border-radius:10px;
+background:#ff003c;
+color:white;
+cursor:pointer;
+font-size:16px
+}
+
+.video-section{
+width:90%;
+max-width:1000px;
+margin-top:40px;
+z-index:1
+}
+
+.video-section h2{
+text-align:center;
+margin-bottom:20px;
+text-shadow:0 0 10px #ff003c
+}
+
+.video-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px
+}
+
+.video-card{
+position:relative;
+background:#111;
+padding:10px;
+border-radius:12px;
+border:1px solid rgba(255,0,0,0.4);
+box-shadow:0 0 15px rgba(255,0,0,0.2)
+}
+
+.video-card video{
+width:100%;
+border-radius:8px
+}
+
+.video-date{
+position:absolute;
+top:15px;
+left:15px;
+background:rgba(0,0,0,0.6);
+padding:5px 10px;
+border-radius:6px;
+font-size:13px;
+border:1px solid #ff003c;
+box-shadow:0 0 10px #ff003c
+}
+
+.cursor{
+position:fixed;
+width:10px;
+height:10px;
+background:#ff003c;
+border-radius:50%;
+pointer-events:none;
+box-shadow:0 0 15px #ff003c;
+z-index:9
+}
+
+.music-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff003c;
+border:none;
+padding:10px 15px;
+border-radius:10px;
+color:white;
+cursor:pointer;
+z-index:2
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="popup" id="popup">
+<div class="popup-box">
+<h2>Cảm ơn vì đã xem trang của tụi em ❤️</h2>
+<button onclick="startSite()">OK</button>
+</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+
+<audio id="music" loop>
+<source src="https://raw.githubusercontent.com/lenphim36thanhhoa/cbnrthfgnf/main/c%C3%B3%20h%E1%BA%B9n%20v%E1%BB%9Bi%20thanh%20xu%C3%A2n.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">🔊 Nhạc</button>
+
+<canvas id="bg"></canvas>
+
+<div class="container">
+
+<div class="avatar"></div>
+
+<h1>THPT Triệu Phong<br>K25-28</h1>
+
+<div class="links">
+<a href="https://www.tiktok.com/@a5thpttrieuphong0">TikTok lớp</a>
+</div>
+
+<div class="footer">bio của lớp bọn em ạ</div>
+
+<!-- VIEW + TIM -->
+<div class="stats">
+<span>👁 <span id="viewCount">0</span></span>
+<span class="likeBtn" onclick="likeSite()">❤️ <span id="likeCount">0</span></span>
+</div>
+
+</div>
+
+<script>
+
+/* MUSIC */
+
+const music=document.getElementById("music")
+
+function startSite(){
+document.getElementById("popup").style.display="none"
+music.play().catch(()=>{})
+}
+
+function toggleMusic(){
+if(music.paused){
+music.play()
+}else{
+music.pause()
+}
+}
+
+/* CURSOR */
+
+const cursor=document.getElementById("cursor")
+
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px"
+cursor.style.top=e.clientY+"px"
+})
+
+/* VIEW + TIM */
+
+const namespace="thpt-trieuphong-a5"
+
+/* VIEW */
+fetch(`https://api.countapi.xyz/hit/${namespace}/view`)
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("viewCount").innerText=d.value
+})
+
+/* HIỆN TIM */
+fetch(`https://api.countapi.xyz/get/${namespace}/like`)
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("likeCount").innerText=d.value||0
+})
+
+/* BẤM TIM */
+function likeSite(){
+
+if(localStorage.getItem("liked")){
+alert("Bạn đã thả tim rồi ❤️")
+return
+}
+
+fetch(`https://api.countapi.xyz/hit/${namespace}/like`)
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("likeCount").innerText=d.value
+})
+
+localStorage.setItem("liked","true")
+
+}
+
+</script>
+
+</body>
+</html>
