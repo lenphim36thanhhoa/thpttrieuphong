@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -9,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 
 body{
@@ -129,7 +129,6 @@ text-shadow:0 0 10px #ff003c
 }
 
 .likeBtn{cursor:pointer;transition:.2s}
-
 .likeBtn:hover{transform:scale(1.2)}
 
 .video-section{
@@ -185,7 +184,6 @@ color:white;
 cursor:pointer;
 z-index:3
 }
-
 </style>
 </head>
 
@@ -207,9 +205,7 @@ z-index:3
 <button class="music-btn" onclick="toggleMusic()">🔊 Nhạc</button>
 
 <div class="container">
-
 <div class="avatar"></div>
-
 <h1>THPT Triệu Phong<br>K25-28</h1>
 
 <div class="links">
@@ -222,11 +218,9 @@ z-index:3
 <span>👁 <span id="viewCount">0</span></span>
 <span class="likeBtn" onclick="likeSite()">❤️ <span id="likeCount">0</span></span>
 </div>
-
 </div>
 
 <div class="video-section">
-
 <h2>Kỷ Niệm Lớp</h2>
 
 <div class="video-grid">
@@ -247,53 +241,30 @@ z-index:3
 
 </div>
 </div>
-<script>
 
+<script>
 const music=document.getElementById("music")
 
-const API="https://api.counterapi.dev/v2/trieuphong"
-
-function proxy(url){
-return "https://api.allorigins.win/raw?url="+encodeURIComponent(url)
-}
-
 async function startSite(){
-
 document.getElementById("popup").style.display="none"
-
 music.play().catch(()=>{})
 
-let view=await fetch(proxy(API+"/view123/up"))
-.then(r=>r.json())
+let view=await fetch("https://api.countapi.xyz/hit/trieuphongk25/view").then(r=>r.json())
+document.getElementById("viewCount").innerText=view.value||0
 
-document.getElementById("viewCount").innerText=view.up_count||0
-
-let like=await fetch(proxy(API+"/like123"))
-.then(r=>r.json())
-
-document.getElementById("likeCount").innerText=like.up_count||0
-
+let like=await fetch("https://api.countapi.xyz/get/trieuphongk25/like").then(r=>r.json())
+document.getElementById("likeCount").innerText=like.value||0
 }
 
 function toggleMusic(){
-if(music.paused){
-music.play()
-}else{
-music.pause()
-}
+if(music.paused){music.play()}else{music.pause()}
 }
 
 async function likeSite(){
-
 if(localStorage.getItem("liked")) return
-
-let like=await fetch(proxy(API+"/like123/up"))
-.then(r=>r.json())
-
-document.getElementById("likeCount").innerText=like.up_count||0
-
+let like=await fetch("https://api.countapi.xyz/hit/trieuphongk25/like").then(r=>r.json())
+document.getElementById("likeCount").innerText=like.value||0
 localStorage.setItem("liked","true")
-
 }
 
 const canvas=document.getElementById("bg")
@@ -319,9 +290,7 @@ d:Math.random()*2
 }
 
 function draw(){
-
 ctx.clearRect(0,0,canvas.width,canvas.height)
-
 ctx.fillStyle="rgba(255,0,60,0.8)"
 
 particles.forEach(p=>{
@@ -336,15 +305,13 @@ if(p.y>canvas.height){
 p.y=0
 p.x=Math.random()*canvas.width
 }
-
 })
 
 requestAnimationFrame(draw)
-
 }
 
 draw()
-
 </script>
+
 </body>
 </html>
