@@ -264,9 +264,7 @@ z-index:3
 
 <script>
 
-const music=document.getElementById("music")
 const API="https://dawn-wildflower-8bce.lebaoduy0202.workers.dev"
-
 const music=document.getElementById("music")
 
 async function startSite(){
@@ -275,43 +273,24 @@ document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-let view = await fetch(API+"?type=view").then(r=>r.json())
-document.getElementById("viewCount").innerText=view.data.up_count
+let view=await fetch(API+"?type=view").then(r=>r.json())
+document.getElementById("viewCount").innerText=view.data.up_count||0
 
-let like = await fetch(API+"?type=getlike").then(r=>r.json())
+let like=await fetch(API+"?type=getlike").then(r=>r.json())
 document.getElementById("likeCount").innerText=like.data.up_count||0
 
 }
 
 function toggleMusic(){
-music.paused ? music.play() : music.pause()
+music.paused?music.play():music.pause()
 }
 
 async function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-let like = await fetch(API+"?type=like").then(r=>r.json())
-
-document.getElementById("likeCount").innerText=like.data.up_count
-
-localStorage.setItem("liked","true")
-
-}
-function toggleMusic(){
-if(music.paused){
-music.play()
-}else{
-music.pause()
-}
-}
-
-async function likeSite(){
-
-if(localStorage.getItem("liked")) return
-
-let like=await getAPI(`https://api.counterapi.dev/v2/${namespace}/like123/up`)
-if(like) document.getElementById("likeCount").innerText=like.data.up_count
+let like=await fetch(API+"?type=like").then(r=>r.json())
+document.getElementById("likeCount").innerText=like.data.up_count||0
 
 localStorage.setItem("liked","true")
 
@@ -367,5 +346,6 @@ requestAnimationFrame(draw)
 draw()
 
 </script>
+
 </body>
 </html>
