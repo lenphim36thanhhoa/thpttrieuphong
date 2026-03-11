@@ -243,17 +243,28 @@ z-index:3
 </div>
 
 <script>
+
 const music=document.getElementById("music")
+const API="https://api.counterapi.dev/v2/trieuphong"
+const TOKEN="ut_ahrfnzekmGJFD4AlYJOUM07Y2ZCa68O0SGRBODfd"
 
 async function startSite(){
+
 document.getElementById("popup").style.display="none"
 music.play().catch(()=>{})
 
-let view=await fetch("https://api.countapi.xyz/hit/trieuphongk25/view").then(r=>r.json())
-document.getElementById("viewCount").innerText=view.value||0
+let view=await fetch(API+"/like123",{
+headers:{Authorization:"Bearer "+TOKEN}
+}).then(r=>r.json())
 
-let like=await fetch("https://api.countapi.xyz/get/trieuphongk25/like").then(r=>r.json())
-document.getElementById("likeCount").innerText=like.value||0
+document.getElementById("viewCount").innerText=view.up_count||0
+
+let like=await fetch(API+"/like123",{
+headers:{Authorization:"Bearer "+TOKEN}
+}).then(r=>r.json())
+
+document.getElementById("likeCount").innerText=like.up_count||0
+
 }
 
 function toggleMusic(){
@@ -261,10 +272,17 @@ if(music.paused){music.play()}else{music.pause()}
 }
 
 async function likeSite(){
+
 if(localStorage.getItem("liked")) return
-let like=await fetch("https://api.countapi.xyz/hit/trieuphongk25/like").then(r=>r.json())
-document.getElementById("likeCount").innerText=like.value||0
+
+let like=await fetch(API+"/like123/up",{
+headers:{Authorization:"Bearer "+TOKEN}
+}).then(r=>r.json())
+
+document.getElementById("likeCount").innerText=like.up_count||0
+
 localStorage.setItem("liked","true")
+
 }
 
 const canvas=document.getElementById("bg")
@@ -290,7 +308,9 @@ d:Math.random()*2
 }
 
 function draw(){
+
 ctx.clearRect(0,0,canvas.width,canvas.height)
+
 ctx.fillStyle="rgba(255,0,60,0.8)"
 
 particles.forEach(p=>{
@@ -305,12 +325,15 @@ if(p.y>canvas.height){
 p.y=0
 p.x=Math.random()*canvas.width
 }
+
 })
 
 requestAnimationFrame(draw)
+
 }
 
 draw()
+
 </script>
 
 </body>
