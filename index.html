@@ -252,7 +252,10 @@ z-index:3
 const music=document.getElementById("music")
 
 const API="https://api.counterapi.dev/v2/trieuphong"
-const proxy="https://corsproxy.io/?"
+
+function proxy(url){
+return "https://api.allorigins.win/raw?url="+encodeURIComponent(url)
+}
 
 async function startSite(){
 
@@ -260,12 +263,12 @@ document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-let view=await fetch(proxy+API+"/view123/up")
+let view=await fetch(proxy(API+"/view123/up"))
 .then(r=>r.json())
 
 document.getElementById("viewCount").innerText=view.up_count
 
-let like=await fetch(proxy+API+"/like123")
+let like=await fetch(proxy(API+"/like123"))
 .then(r=>r.json())
 
 document.getElementById("likeCount").innerText=like.up_count||0
@@ -280,7 +283,7 @@ async function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-let like=await fetch(proxy+API+"/like123/up")
+let like=await fetch(proxy(API+"/like123/up"))
 .then(r=>r.json())
 
 document.getElementById("likeCount").innerText=like.up_count
