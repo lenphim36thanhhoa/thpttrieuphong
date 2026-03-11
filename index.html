@@ -245,15 +245,17 @@ z-index:3
 <script>
 
 const music=document.getElementById("music")
+
 const API="https://api.counterapi.dev/v2/trieuphong"
 const TOKEN="ut_ahrfnzekmGJFD4AlYJOUM07Y2ZCa68O0SGRBODfd"
 
 async function startSite(){
 
 document.getElementById("popup").style.display="none"
+
 music.play().catch(()=>{})
 
-let view=await fetch(API+"/like123",{
+let view=await fetch(API+"/view123/up",{
 headers:{Authorization:"Bearer "+TOKEN}
 }).then(r=>r.json())
 
@@ -268,7 +270,11 @@ document.getElementById("likeCount").innerText=like.up_count||0
 }
 
 function toggleMusic(){
-if(music.paused){music.play()}else{music.pause()}
+if(music.paused){
+music.play()
+}else{
+music.pause()
+}
 }
 
 async function likeSite(){
