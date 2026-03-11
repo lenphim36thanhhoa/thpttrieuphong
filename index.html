@@ -261,14 +261,11 @@ z-index:3
 </div>
 
 </div>
+
 <script>
 
-const music = document.getElementById("music")
-const namespace = "trieuphong"
-
-function proxy(url){
-return "https://api.allorigins.win/raw?url=" + encodeURIComponent(url)
-}
+const music=document.getElementById("music")
+const namespace="trieuphong"
 
 function startSite(){
 
@@ -276,23 +273,17 @@ document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-fetch(proxy(`https://api.counterapi.dev/v1/${namespace}/view123/up`))
+fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/view123/up`)
 .then(r=>r.json())
 .then(d=>{
-if(d && d.count !== undefined){
-document.getElementById("viewCount").innerText = d.count
-}
+document.getElementById("viewCount").innerText=d.data.up_count
 })
-.catch(()=>{})
 
-fetch(proxy(`https://api.counterapi.dev/v1/${namespace}/like123`))
+fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/like123`)
 .then(r=>r.json())
 .then(d=>{
-if(d && d.count !== undefined){
-document.getElementById("likeCount").innerText = d.count
-}
+document.getElementById("likeCount").innerText=d.data.up_count||0
 })
-.catch(()=>{})
 
 }
 
@@ -308,18 +299,64 @@ function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(proxy(`https://api.counterapi.dev/v1/${namespace}/like123/up`))
+fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/like123/up`)
 .then(r=>r.json())
 .then(d=>{
-if(d && d.count !== undefined){
-document.getElementById("likeCount").innerText = d.count
-}
+document.getElementById("likeCount").innerText=d.data.up_count
 })
-.catch(()=>{})
 
 localStorage.setItem("liked","true")
 
 }
+
+const canvas=document.getElementById("bg")
+const ctx=canvas.getContext("2d")
+
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
+
+resize()
+window.addEventListener("resize",resize)
+
+let particles=[]
+
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2+1,
+d:Math.random()*2
+})
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="rgba(255,0,60,0.8)"
+
+particles.forEach(p=>{
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fill()
+
+p.y+=1
+p.x+=Math.sin(p.d)
+
+if(p.y>canvas.height){
+p.y=0
+p.x=Math.random()*canvas.width
+}
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
 
 </script>
 </body>
