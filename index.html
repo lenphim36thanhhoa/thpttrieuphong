@@ -266,7 +266,7 @@ music.play().catch(()=>{})
 let view=await fetch(proxy(API+"/view123/up"))
 .then(r=>r.json())
 
-document.getElementById("viewCount").innerText=view.up_count
+document.getElementById("viewCount").innerText=view.up_count||0
 
 let like=await fetch(proxy(API+"/like123"))
 .then(r=>r.json())
@@ -276,7 +276,11 @@ document.getElementById("likeCount").innerText=like.up_count||0
 }
 
 function toggleMusic(){
-if(music.paused){music.play()}else{music.pause()}
+if(music.paused){
+music.play()
+}else{
+music.pause()
+}
 }
 
 async function likeSite(){
@@ -286,7 +290,7 @@ if(localStorage.getItem("liked")) return
 let like=await fetch(proxy(API+"/like123/up"))
 .then(r=>r.json())
 
-document.getElementById("likeCount").innerText=like.up_count
+document.getElementById("likeCount").innerText=like.up_count||0
 
 localStorage.setItem("liked","true")
 
