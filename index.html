@@ -265,26 +265,9 @@ z-index:3
 <script>
 
 const music=document.getElementById("music")
-const namespace="trieuphong"
+const API="https://dawn-wildflower-8bce.lebaoduy0202.workers.dev"
 
-async function getAPI(url){
-const proxies=[
-u=>`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
-u=>`https://cors.isomorphic-git.org/${u}`,
-u=>`https://thingproxy.freeboard.io/fetch/${u}`
-]
-
-for(let p of proxies){
-try{
-let r=await fetch(p(url))
-let t=await r.json()
-let data=t.contents?JSON.parse(t.contents):t
-return data
-}catch(e){}
-}
-
-return null
-}
+const music=document.getElementById("music")
 
 async function startSite(){
 
@@ -292,14 +275,29 @@ document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-let view=await getAPI(`https://api.counterapi.dev/v2/${namespace}/view123/up`)
-if(view) document.getElementById("viewCount").innerText=view.data.up_count
+let view = await fetch(API+"?type=view").then(r=>r.json())
+document.getElementById("viewCount").innerText=view.data.up_count
 
-let like=await getAPI(`https://api.counterapi.dev/v2/${namespace}/like123`)
-if(like) document.getElementById("likeCount").innerText=like.data.up_count||0
+let like = await fetch(API+"?type=getlike").then(r=>r.json())
+document.getElementById("likeCount").innerText=like.data.up_count||0
 
 }
 
+function toggleMusic(){
+music.paused ? music.play() : music.pause()
+}
+
+async function likeSite(){
+
+if(localStorage.getItem("liked")) return
+
+let like = await fetch(API+"?type=like").then(r=>r.json())
+
+document.getElementById("likeCount").innerText=like.data.up_count
+
+localStorage.setItem("liked","true")
+
+}
 function toggleMusic(){
 if(music.paused){
 music.play()
