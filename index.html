@@ -273,16 +273,18 @@ document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-fetch(`https://corsproxy.io/?https://api.counterapi.dev/v2/${namespace}/view123/up`)
+fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.counterapi.dev/v2/${namespace}/view123/up`)}`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("viewCount").innerText=d.data.up_count
+const data=JSON.parse(d.contents)
+document.getElementById("viewCount").innerText=data.data.up_count
 })
 
-fetch(`https://corsproxy.io/?https://api.counterapi.dev/v2/${namespace}/like123`)
+fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.counterapi.dev/v2/${namespace}/like123`)}`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.data.up_count||0
+const data=JSON.parse(d.contents)
+document.getElementById("likeCount").innerText=data.data.up_count||0
 })
 
 }
@@ -299,10 +301,11 @@ function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://corsproxy.io/?https://api.counterapi.dev/v2/${namespace}/like123/up`)
+fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.counterapi.dev/v2/${namespace}/like123/up`)}`)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("likeCount").innerText=d.data.up_count
+const data=JSON.parse(d.contents)
+document.getElementById("likeCount").innerText=data.data.up_count
 })
 
 localStorage.setItem("liked","true")
