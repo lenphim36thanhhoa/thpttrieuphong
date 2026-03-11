@@ -10,12 +10,7 @@
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 
 body{
 background:#000;
@@ -133,14 +128,9 @@ color:#ff003c;
 text-shadow:0 0 10px #ff003c
 }
 
-.likeBtn{
-cursor:pointer;
-transition:.2s
-}
+.likeBtn{cursor:pointer;transition:.2s}
 
-.likeBtn:hover{
-transform:scale(1.2)
-}
+.likeBtn:hover{transform:scale(1.2)}
 
 .video-section{
 width:90%;
@@ -170,10 +160,7 @@ border:1px solid rgba(255,0,0,0.4);
 box-shadow:0 0 15px rgba(255,0,0,0.2)
 }
 
-video{
-width:100%;
-border-radius:8px
-}
+video{width:100%;border-radius:8px}
 
 .video-date{
 position:absolute;
@@ -259,51 +246,42 @@ z-index:3
 </div>
 
 </div>
-
 </div>
 
 <script>
 
 const music=document.getElementById("music")
-const namespace="trieuphong"
 
-function startSite(){
+async function startSite(){
 
 document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/view123/up`)
+let view=await fetch("https://api.countapi.xyz/hit/trieuphongk25/view")
 .then(r=>r.json())
-.then(d=>{
-document.getElementById("viewCount").innerText=d.data.up_count
-})
 
-fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/like123`)
+document.getElementById("viewCount").innerText=view.value
+
+let like=await fetch("https://api.countapi.xyz/get/trieuphongk25/like")
 .then(r=>r.json())
-.then(d=>{
-document.getElementById("likeCount").innerText=d.data.up_count||0
-})
+
+document.getElementById("likeCount").innerText=like.value||0
 
 }
 
 function toggleMusic(){
-if(music.paused){
-music.play()
-}else{
-music.pause()
-}
+if(music.paused){music.play()}else{music.pause()}
 }
 
-function likeSite(){
+async function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://api.allorigins.win/raw?url=https://api.counterapi.dev/v1/${namespace}/like123/up`)
+let like=await fetch("https://api.countapi.xyz/hit/trieuphongk25/like")
 .then(r=>r.json())
-.then(d=>{
-document.getElementById("likeCount").innerText=d.data.up_count
-})
+
+document.getElementById("likeCount").innerText=like.value
 
 localStorage.setItem("liked","true")
 
