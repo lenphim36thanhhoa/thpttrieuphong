@@ -267,25 +267,36 @@ z-index:3
 const music=document.getElementById("music")
 const namespace="trieuphong"
 
-function startSite(){
+async function getAPI(url){
+const proxies=[
+u=>`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+u=>`https://cors.isomorphic-git.org/${u}`,
+u=>`https://thingproxy.freeboard.io/fetch/${u}`
+]
+
+for(let p of proxies){
+try{
+let r=await fetch(p(url))
+let t=await r.json()
+let data=t.contents?JSON.parse(t.contents):t
+return data
+}catch(e){}
+}
+
+return null
+}
+
+async function startSite(){
 
 document.getElementById("popup").style.display="none"
 
 music.play().catch(()=>{})
 
-fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.counterapi.dev/v2/${namespace}/view123/up`)}`)
-.then(r=>r.json())
-.then(d=>{
-const data=JSON.parse(d.contents)
-document.getElementById("viewCount").innerText=data.data.up_count
-})
+let view=await getAPI(`https://api.counterapi.dev/v2/${namespace}/view123/up`)
+if(view) document.getElementById("viewCount").innerText=view.data.up_count
 
-fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.counterapi.dev/v2/${namespace}/like123`)}`)
-.then(r=>r.json())
-.then(d=>{
-const data=JSON.parse(d.contents)
-document.getElementById("likeCount").innerText=data.data.up_count||0
-})
+let like=await getAPI(`https://api.counterapi.dev/v2/${namespace}/like123`)
+if(like) document.getElementById("likeCount").innerText=like.data.up_count||0
 
 }
 
@@ -297,16 +308,12 @@ music.pause()
 }
 }
 
-function likeSite(){
+async function likeSite(){
 
 if(localStorage.getItem("liked")) return
 
-fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.counterapi.dev/v2/${namespace}/like123/up`)}`)
-.then(r=>r.json())
-.then(d=>{
-const data=JSON.parse(d.contents)
-document.getElementById("likeCount").innerText=data.data.up_count
-})
+let like=await getAPI(`https://api.counterapi.dev/v2/${namespace}/like123/up`)
+if(like) document.getElementById("likeCount").innerText=like.data.up_count
 
 localStorage.setItem("liked","true")
 
